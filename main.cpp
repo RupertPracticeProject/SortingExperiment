@@ -102,8 +102,8 @@ class NumberSorter
         }
         static void MergeRecursively(vector<int> & a, int start, int middle, int end, bool RightOrder(int a, int b))
         {
-            if(start != middle) MergeRecursively(a, start, (start+middle)/2, middle, RightOrder);
-            if(middle+1 != end) MergeRecursively(a, middle+1, (middle+1+end)/2, end, RightOrder);
+            if(start < middle) MergeRecursively(a, start, (start+middle)/2, middle, RightOrder);
+            if(middle+1 < end) MergeRecursively(a, middle+1, (middle+1+end)/2, end, RightOrder);
             Merge(a, start, middle, end, RightOrder);
         }
         static void MergeSort(vector<int> & a, bool RightOrder(int a, int b))
@@ -114,7 +114,7 @@ class NumberSorter
 
         static void SortAndCalculateTime(void Sort(vector<int> & a, bool RightOrder(int a, int b)), vector<int> & array, bool RightOrder(int a, int b), int arrayFlag)
         {
-            if(arrayFlag == WITH_ARRAY) Print(array);
+            if(arrayFlag == SHOW_ARRAY) Print(array);
 
             auto start = high_resolution_clock::now();
             Sort(
@@ -123,7 +123,7 @@ class NumberSorter
             );
             auto end = high_resolution_clock::now();
             auto totalTimeInNanoSeconds = duration_cast<nanoseconds>(end-start).count();
-            if(arrayFlag == WITH_ARRAY) Print(array);
+            if(arrayFlag == SHOW_ARRAY) Print(array);
             cout << "It's cost " << totalTimeInNanoSeconds << " nano seconds to sort the array. " << "\n\n\n\n";
         }
 };
@@ -137,7 +137,7 @@ int main()
 
     vector<int> array;
 
-    initVector(array, 100);
+    initVector(array, 50);
     
 
     NumberSorter::SortAndCalculateTime(
@@ -147,11 +147,11 @@ int main()
         {
             return a < b;
         },
-        NO_ARRAY
+        SHOW_ARRAY
     );
 
 
-    initVector(array, 100);
+    initVector(array, 50);
 
     NumberSorter::SortAndCalculateTime(
         NumberSorter::MergeSort,
@@ -160,7 +160,7 @@ int main()
         {
             return a < b;
         },
-        NO_ARRAY
+        SHOW_ARRAY
     );
     
 
